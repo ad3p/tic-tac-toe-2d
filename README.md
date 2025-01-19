@@ -1,0 +1,1 @@
+Classic game of Tic-Tac-Toe with a new stategic twist, where each move leads to a new sub-game on a larger 3x3 board. Outmaneuver your opponent by thinking strategically, as every decision impacts both the sub-games and the main board. Win sub-games to control the main board and complete rows, columns, or diagonals to win the game. 
