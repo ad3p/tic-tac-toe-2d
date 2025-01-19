@@ -1,0 +1,642 @@
+<!-- <!DOCTYPE html> -->
+<html>
+    <head>
+        <title>
+            Tic-Tac-Toe | Playing Now
+        </title>
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <meta name="title" content="Classic Tic-Tac-Toe with a Strategic Twist"/>
+        <meta name="description" content="Play 2D Tic-Tac-Toe with a strategic twist! Each move leads to a new sub-game on a larger 3x3 board. Outsmart your opponent to win the game!"/>
+        
+        <link rel="icon" href="icons/favicon.ico"/> 
+        <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png"/>
+        <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png"/> 
+
+        <link rel="stylesheet" href="style/style.css">
+        <!-- <meta http-equiv="refresh" content="2"> -->    
+
+</head>
+
+<body>
+<div id="mobileBox">
+<div id="mainHeader">
+    <span class="gameTitle">
+        T<i>I</i>&thinsp;C<br>TAC<br>TOE
+    </span>
+    <span class="miniGame">
+        <div class="button-bar">
+            <!-- <span class="row1"> -->
+                <button id="bm1" class="miniBox b-1 b-4">&nbsp;</button>
+                <button id="bm2" class="miniBox b-1">&nbsp;</button>
+                <button id="bm3" class="miniBox b-1 b-2">&nbsp;</button>
+            <!-- </span> -->
+            <!-- <span class="row2"> -->
+                <button id="bm4" class="miniBox b-4">&nbsp;</button>
+                <button id="bm5" class="miniBox ">&nbsp;</button>
+                <button id="bm6" class="miniBox b-2">&nbsp;</button>
+            <!-- </span> -->
+            <!-- <span class="row3"> -->
+                <button id="bm7" class="miniBox b-3 b-4">&nbsp;</button>
+                <button id="bm8" class="miniBox b-3">&nbsp;</button>
+                <button id="bm9" class="miniBox b-2 b-3">&nbsp;</button>
+            <!-- </span> -->
+        </div>
+    </span>
+</div>
+<div id="subHeader">
+    <span class="turnOf">
+        TURN OF : &nbsp;
+    </span>
+    <span class="turnBoxes">
+        <button id="b10" class="boxTurn">O</button>
+        <!-- <button id="b110" class="boxTurn">O</button> -->
+    </span>
+</div>
+<div>
+
+    <div id="sideWelcomeInfoPanel">
+        <span class="sideWelcomeInfo">
+            <span>Rules: (Scroll below)</span> 
+            
+            <ul>
+                MAIN BOARD
+                <li>The game is played on a standard 3x3 Tic-Tac-Toe grid.</li>
+
+                SUB GAMES 
+                <li>Every move on the main board triggers a new sub-game on the corresponding 3x3 grid. The location of the sub-game is determined by the square where the previous player made their move. For example, if a player places their mark in the top-left of the main board, the opponent must play their next move in the corresponding square of the sub-board (top-left corner of the sub-board).</li>
+
+                WINNING A SUB-GAME
+                <li>A player must win or draw the sub-game to defend their mark.</li>
+                <li>If the opponent wins the sub-game, their mark will be placed on the main board in the corresponding position of the sub-game.</li>
+                <li>If the original player wins or the sub-game results in a draw, the main board remains unchanged.</li>
+
+                END OF GAME
+                <li>The game ends when a player wins on the main board (by completing a row, column, or diagonal) or when all the spaces are filled with no winner (a draw).</li>
+
+                OVERALL STRATEGY
+                <li>Players must carefully manage both the outcome of sub-games and the placement of their marks on the main board, considering that losing a sub-game could result in the opponent gaining an advantage on the main board.</li>
+
+            </ul>
+            
+            <button id="closeMenu" class="playButton" onclick="playAdvance()">Play the game</button>
+            <button id="closeMenu" class="playButton" onclick="closeWelcomeMessage()">Close</button>
+
+            </span>
+    </div>
+
+    <div id="sideMainInfoPanel">
+        <span class="sideMenuInfo">
+            <span style="font-size: 1.5rem;">Main game result:</span> 
+            <span id="main-game-result" class="" style="font-size: 4rem;"></span>
+            <button id="closeMenu" class="closeButton" onclick="closeMainResult()">New Game</button>
+    
+        </span>
+    </div>
+    
+    <div id="sideSubInfoPanel">
+        <span class="sideMenuInfo">
+            <span id="sub-game-result">X | O WON</span> 
+            <button id="closeMenu" class="closeButton" onclick="closeSubResult()">Close</button>
+
+        </span>
+    </div>
+   
+    <div class="button-bar">
+        <!-- <span class="row1"> -->
+            <button id="b1" class="bbox b-1 b-4">&nbsp;</button>
+            <button id="b2" class="bbox b-1">&nbsp;</button>
+            <button id="b3" class="bbox b-1 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row2"> -->
+            <button id="b4" class="bbox b-4">&nbsp;</button>
+            <button id="b5" class="bbox ">&nbsp;</button>
+            <button id="b6" class="bbox b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row3"> -->
+            <button id="b7" class="bbox b-3 b-4">&nbsp;</button>
+            <button id="b8" class="bbox b-3">&nbsp;</button>
+            <button id="b9" class="bbox b-2 b-3">&nbsp;</button>
+        <!-- </span> -->
+    </div>
+    
+    <div id="box-container">
+        <div id="box1zoom" class="smallBox button-bar">
+            <!-- <span class="row1"> -->
+        <button id="b11" class="sbox box1 b-1 b-4">&nbsp;</button>
+        <button id="b12" class="sbox box1 b-1">&nbsp;</button>
+        <button id="b13" class="sbox box1 b-1 b-2">&nbsp;</button>
+    <!-- </span> -->
+    <!-- <span class="row2"> -->
+        <button id="b14" class="sbox box1 b-4">&nbsp;</button>
+        <button id="b15" class="sbox box1">&nbsp;</button>
+        <button id="b16" class="sbox box1 b-2">&nbsp;</button>
+    <!-- </span> -->
+    <!-- <span class="row3"> -->
+        <button id="b17" class="sbox box1 b-3 b-4">&nbsp;</button>
+        <button id="b18" class="sbox box1 b-3">&nbsp;</button>
+        <button id="b19" class="sbox box1 b-2 b-3">&nbsp;</button>
+    <!-- </span> -->
+        </div>
+
+    <div id="box2zoom" class="smallBox button-bar">
+    <!-- <span class="row1"> -->
+        <button id="b21" class="sbox box2 b-1 b-4">&nbsp;</button>
+        <button id="b22" class="sbox box2 b-1">&nbsp;</button>
+        <button id="b23" class="sbox box2 b-1 b-2">&nbsp;</button>
+    <!-- </span> -->
+    <!-- <span class="row2"> -->
+        <button id="b24" class="sbox box2 b-4">&nbsp;</button>
+        <button id="b25" class="sbox box2">&nbsp;</button>
+        <button id="b26" class="sbox box2 b-2">&nbsp;</button>
+    <!-- </span> -->
+    <!-- <span class="row3"> -->
+        <button id="b27" class="sbox box2 b-3 b-4">&nbsp;</button>
+        <button id="b28" class="sbox box2 b-3">&nbsp;</button>
+        <button id="b29" class="sbox box2 b-2 b-3">&nbsp;</button>
+    <!-- </span> -->
+    </div>
+
+    <div id="box3zoom" class="smallBox button-bar">
+        <!-- <span class="row1"> -->
+            <button id="b31" class="sbox box3 b-1 b-4">&nbsp;</button>
+            <button id="b32" class="sbox box3 b-1">&nbsp;</button>
+            <button id="b33" class="sbox box3 b-1 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row2"> -->
+            <button id="b34" class="sbox box3 b-4">&nbsp;</button>
+            <button id="b35" class="sbox box3">&nbsp;</button>
+            <button id="b36" class="sbox box3 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row3"> -->
+            <button id="b37" class="sbox box3 b-3 b-4">&nbsp;</button>
+            <button id="b38" class="sbox box3 b-3">&nbsp;</button>
+            <button id="b39" class="sbox box3 b-2 b-3">&nbsp;</button>
+        <!-- </span> -->
+    </div>
+
+    <!-- </div>
+
+    <div id="box-container"> -->
+
+
+    <div id="box4zoom" class="smallBox button-bar">
+        <!-- <span class="row1"> -->
+            <button id="b41" class="sbox box4 b-1 b-4">&nbsp;</button>
+            <button id="b42" class="sbox box4 b-1">&nbsp;</button>
+            <button id="b43" class="sbox box4 b-1 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row2"> -->
+            <button id="b44" class="sbox box4 b-4">&nbsp;</button>
+            <button id="b45" class="sbox box4">&nbsp;</button>
+            <button id="b46" class="sbox box4 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row3"> -->
+            <button id="b47" class="sbox box4 b-3 b-4">&nbsp;</button>
+            <button id="b48" class="sbox box4 b-3">&nbsp;</button>
+            <button id="b49" class="sbox box4 b-2 b-3">&nbsp;</button>
+        <!-- </span> -->
+    </div>
+
+    <div id="box5zoom" class="smallBox button-bar">
+        <!-- <span class="row1"> -->
+            <button id="b51" class="sbox box5 b-1 b-4">&nbsp;</button>
+            <button id="b52" class="sbox box5 b-1">&nbsp;</button>
+            <button id="b53" class="sbox box5 b-1 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row2"> -->
+            <button id="b54" class="sbox box5 b-4">&nbsp;</button>
+            <button id="b55" class="sbox box5">&nbsp;</button>
+            <button id="b56" class="sbox box5 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row3"> -->
+            <button id="b57" class="sbox box5 b-3 b-4">&nbsp;</button>
+            <button id="b58" class="sbox box5 b-3">&nbsp;</button>
+            <button id="b59" class="sbox box5 b-2 b-3">&nbsp;</button>
+        <!-- </span> -->
+    </div>
+
+    <div id="box6zoom" class="smallBox button-bar">
+        <!-- <span class="row1"> -->
+            <button id="b61" class="sbox box6 b-1 b-4">&nbsp;</button>
+            <button id="b62" class="sbox box6 b-1">&nbsp;</button>
+            <button id="b63" class="sbox box6 b-1 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row2"> -->
+            <button id="b64" class="sbox box6 b-4">&nbsp;</button>
+            <button id="b65" class="sbox box6">&nbsp;</button>
+            <button id="b66" class="sbox box6 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row3"> -->
+            <button id="b67" class="sbox box6 b-3 b-4">&nbsp;</button>
+            <button id="b68" class="sbox box6 b-3">&nbsp;</button>
+            <button id="b69" class="sbox box6 b-2 b-3">&nbsp;</button>
+        <!-- </span> -->
+    </div>
+
+    <!-- </div>
+
+    <div id="box-container"> -->
+
+    <div id="box7zoom" class="smallBox button-bar">
+        <!-- <span class="row1"> -->
+            <button id="b71" class="sbox box7 b-1 b-4">&nbsp;</button>
+            <button id="b72" class="sbox box7 b-1">&nbsp;</button>
+            <button id="b73" class="sbox box7 b-1 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row2"> -->
+            <button id="b74" class="sbox box7 b-4">&nbsp;</button>
+            <button id="b75" class="sbox box7">&nbsp;</button>
+            <button id="b76" class="sbox box7 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row3"> -->
+            <button id="b77" class="sbox box7 b-3 b-4">&nbsp;</button>
+            <button id="b78" class="sbox box7 b-3">&nbsp;</button>
+            <button id="b79" class="sbox box7 b-2 b-3">&nbsp;</button>
+        <!-- </span> -->
+        
+    </div>
+
+    <div id="box8zoom" class="smallBox button-bar">
+        <!-- <span class="row1"> -->
+            <button id="b81" class="sbox box8 b-1 b-4">&nbsp;</button>
+            <button id="b82" class="sbox box8 b-1">&nbsp;</button>
+            <button id="b83" class="sbox box8 b-1 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row2"> -->
+            <button id="b84" class="sbox box8 b-4">&nbsp;</button>
+            <button id="b85" class="sbox box8">&nbsp;</button>
+            <button id="b86" class="sbox box8 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row3"> -->
+            <button id="b87" class="sbox box8 b-3 b-4">&nbsp;</button>
+            <button id="b88" class="sbox box8 b-3">&nbsp;</button>
+            <button id="b89" class="sbox box8 b-2 b-3">&nbsp;</button>
+        <!-- </span> -->
+    </div>
+
+    <div id="box9zoom" class="smallBox button-bar">
+        <!-- <span class="row1"> -->
+            <button id="b91" class="sbox box9 b-1 b-4">&nbsp;</button>
+            <button id="b92" class="sbox box9 b-1">&nbsp;</button>
+            <button id="b93" class="sbox box9 b-1 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row2"> -->
+            <button id="b94" class="sbox box9 b-4">&nbsp;</button>
+            <button id="b95" class="sbox box9">&nbsp;</button>
+            <button id="b96" class="sbox box9 b-2">&nbsp;</button>
+        <!-- </span> -->
+        <!-- <span class="row3"> -->
+            <button id="b97" class="sbox box9 b-3 b-4">&nbsp;</button>
+            <button id="b98" class="sbox box9 b-3">&nbsp;</button>
+            <button id="b99" class="sbox box9 b-2 b-3">&nbsp;</button>
+        <!-- </span> -->
+    </div>
+
+    
+    </div>
+
+</div>
+
+<div id="subfooter">
+    <span class="turnOf">
+        <button id="advBtn" class="boxTurn boxDef" onclick="showAdvance()">Play Advance version &#9654;</button>
+        <span class="hiddenOnNormal bbox-hide" style="color: #a30023;">
+        <button id="bDef" class="boxTurn boxDef">O</button>'&nbsp;Defending
+        </span>
+    </span>
+</div>
+
+
+<div id="subfooter2">
+    <span class="subfooteritems">
+    
+    <span class="pills">
+        <span><a class="no-line" href="https://ad3p.github.io/" target="_blank">ad3p</a></span>  &#187; <span><a href="mailto:ad3p@proton.me?subject=Through%20Tic-Tac-Toe" class="mail" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" height="2.5vh" viewBox="0 -3 24 24" fill="none" stroke="#a30023" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a></span>
+    </span>
+
+    <span class="main-game-info">
+        <!-- Main game : <span id="main-game-result"></span> <br> -->
+        STEPS - <span id="main-game-step">1</span>
+        <!-- Sub Game : <span id="sub-game-result"></span> <br> -->
+        : <span id="sub-game-step">0</span>
+    </span>
+
+    </span>
+</div>
+
+</div>
+
+
+<script>
+
+    var isPlayingAdvance = false;
+    var step=1;
+    var sStep = 1;
+    var flag=2;
+    var MGDisplay = document.getElementById("main-game-result");
+    var SGDisplay = document.getElementById("sub-game-result");
+    var MGSteps = document.getElementById("main-game-step");
+    var SGSteps = document.getElementById("sub-game-step");
+    
+    var matX = [0,0,0,0,0,0,0,0,0];
+    var matsX = [0,0,0,0,0,0,0,0,0];
+
+    //may I present you the most brute-force checking algorithm of tic tac toe
+    // takes a 3x3 matrix and gives the result in terms of flag
+    function winCheck(mat0){
+        flag = 2;
+        // checking for 0 win
+        if(mat0[4] == 1){
+            if( (mat0[0] + mat0[8] == 2) ||
+                (mat0[1] + mat0[7] == 2) ||
+                (mat0[2] + mat0[6] == 2) ||
+                (mat0[3] + mat0[5] == 2) ){
+                    // alert("O won");
+                    flag=0;
+                }
+            }
+            
+        if(mat0[0] == 1){
+            if(((mat0[1] + mat0[2] == 2) || (mat0[3]+mat0[6] == 2))){
+                // alert("O won");
+                flag=0;
+            }
+        }
+
+        if(mat0[8] == 1){
+            if(((mat0[7] + mat0[6] == 2) || (mat0[5]+mat0[2] == 2))){
+                // alert("O won");
+                flag=0;
+            }
+        }
+
+        // checking for X win
+        if(mat0[4] == 10){
+            if( (mat0[0] + mat0[8] == 20) ||
+                (mat0[1] + mat0[7] == 20) ||
+                (mat0[2] + mat0[6] == 20) ||
+                (mat0[3] + mat0[5] == 20) ){
+                    // alert("X won");
+                    flag=1;
+                }
+            }
+            
+        if(mat0[0] == 10){
+            if(((mat0[1] + mat0[2] == 20) || (mat0[3]+mat0[6] == 20))){
+                // alert("X won");
+                flag=1;
+            }
+        }
+        if(mat0[8] == 10){
+            if(((mat0[7] + mat0[6] == 20) || (mat0[5]+mat0[2] == 20))){
+                // alert("X won");
+                flag=1;
+            }
+        }
+
+    }
+    
+
+    var boxTurn = document.getElementById("b10");
+    var sboxTurn = "O";//document.getElementById("b110");
+    
+    var cell = document.getElementsByClassName("bbox");
+    var miniCell = document.getElementsByClassName("miniBox");
+
+    var bigBox = document.getElementsByClassName("bbox");
+
+    function closeWelcomeMessage(){
+        document.getElementById("sideWelcomeInfoPanel").style.width = "0px";
+    }
+
+    function closeMainResult(){
+        location.reload() 
+    }
+
+    function showMainResult(){
+            document.getElementById("sideMainInfoPanel").style.width = "100%";
+    }
+
+    var checkMainGameResult = function(){
+        winCheck(matX);
+
+        if(flag == 0){
+            MGDisplay.innerHTML = "O won";
+            showMainResult();
+        }else if(flag == 1){
+            MGDisplay.innerHTML = "X won";
+            showMainResult();
+        }else if(step > 9){
+            // alert("Draw, No change");
+            MGDisplay.innerHTML = "Draw";
+            showMainResult();
+        }
+    }
+
+
+    var fillBox = function(){
+
+        matsX = [0,0,0,0,0,0,0,0,0]
+        // this.className += " bigBox";
+        // <button id="b11" class="sbox box1">&nbsp;</button>
+
+        var boxId = this.id.toString()[1];
+        var miniBoxToFill = document.getElementById("bm"+boxId);
+        var smallBoxToFill = document.getElementById("b"+boxId+boxId);
+
+        MGSteps.innerHTML = step;
+
+        if(step%2 == 0){
+
+            this.style.color = "#6693c4";
+            this.innerHTML = "X";
+            this.removeEventListener('click',fillBox,false);
+
+            smallBoxToFill.style.color = "Green";
+            smallBoxToFill.innerHTML = "X";
+
+            miniBoxToFill.innerHTML = "X";
+            miniBoxToFill.className += " glow";
+
+            document.getElementById("bDef").innerHTML = "X";
+
+            matsX[boxId-1] = 10;
+            matX[boxId-1] = 10;
+
+            boxTurn.innerHTML = "O";
+            sboxTurn = "O";
+            
+        }
+
+        else{
+            this.style.color = "#ac3b2a";
+            this.innerHTML = "O";
+            this.removeEventListener('click',fillBox,false);
+
+            smallBoxToFill.style.color = "Green";
+            smallBoxToFill.innerHTML = "O";
+
+            miniBoxToFill.innerHTML = "O";
+            miniBoxToFill.className += " glow";
+
+            document.getElementById("bDef").innerHTML = "O";
+
+            matsX[boxId-1] = 1;
+            matX[boxId-1] = 1;
+
+            boxTurn.innerHTML = "X";
+            sboxTurn = "X";
+
+        }
+
+        step +=1;
+        sStep+=1;
+
+        if(!isPlayingAdvance){
+            checkMainGameResult();
+        }
+        
+    }
+
+    function closeSubResult(){
+            document.getElementById("sideSubInfoPanel").style.width = "0px";
+    }
+
+    function showSubResult(){
+            document.getElementById("sideSubInfoPanel").style.width = "100%";
+    }
+
+    var fillsBox = function(){
+
+        var bigBoxId = this.id.toString()[1];
+        var boxId = this.id.toString()[2];
+
+        SGSteps.innerHTML = sStep - step + 2 ;
+
+        if(sStep%2 == 0){
+            this.style.color = "#73a8e0";
+            this.innerHTML = "X";
+            this.removeEventListener('click',fillsBox,false);
+
+            matsX[boxId-1] = 10;
+
+            boxTurn.innerHTML = "O";
+        }
+        else{
+            this.style.color = "#dd4e38";
+            this.innerHTML = "O";
+            this.removeEventListener('click',fillsBox,false);
+
+            matsX[boxId-1] = 1;
+
+            boxTurn.innerHTML = "X";
+        }
+
+        sStep +=1;
+        winCheck(matsX);
+        
+        function deactivateActiveBox(){
+
+            var activeSmallBoxes = document.getElementsByClassName("box"+bigBoxId);
+            document.getElementById("b"+bigBoxId).removeEventListener('click',zoomLevel,false);
+
+            // document.getElementById("b"+bigBoxId).classList.remove("bigBox");
+            for(var i=0;i<activeSmallBoxes.length;i++){
+
+                activeSmallBoxes[i].classList.remove("activeBox");
+                activeSmallBoxes[i].removeEventListener('click',fillsBox,false);
+
+                sStep =step;
+                boxTurn.innerHTML = sboxTurn;
+            
+            }
+            showSubResult();
+            checkMainGameResult();
+
+            for (var i=0;i<bigBox.length;i++){
+                bigBox[i].classList.remove("bbox-hide");
+            }
+
+        }
+
+        if(flag == 0){
+            SGDisplay.innerHTML = "O won";
+            document.getElementById("b"+bigBoxId).innerHTML = "O";
+            document.getElementById("bm"+bigBoxId).innerHTML = "O";
+
+            matX[bigBoxId-1] = 1;  
+            deactivateActiveBox() 
+        }else if(flag == 1){
+            SGDisplay.innerHTML = "X won";
+            document.getElementById("b"+bigBoxId).innerHTML = "X";
+            document.getElementById("bm"+bigBoxId).innerHTML = "X";
+
+            matX[bigBoxId-1] = 10;  
+            deactivateActiveBox()
+        }else if(sStep -step > 7){
+            // alert("Draw, No change");
+            SGDisplay.innerHTML = "Draw, <br> <span style='font-size: 2rem'>No change</span>";
+            deactivateActiveBox();
+        }
+        
+    }
+    
+
+    var zoomLevel = function(){
+        // <button id="b1" class="bbox">&nbsp;</button>
+        var bigBoxId = this.id.toString()[1];
+
+        for (var i=0;i<bigBox.length;i++){
+            bigBox[i].className += " bbox-hide";
+        }
+
+
+        // <button id="b11" class="box box1">&nbsp;</button>
+        var smallBoxes = document.getElementsByClassName("sbox");
+        for(var i=0;i<smallBoxes.length;i++){
+
+            smallBoxes[i].classList.remove("activeBox");
+            smallBoxes[i].removeEventListener('click',fillsBox,false);
+            
+        }
+
+        var activeSmallBoxes = document.getElementsByClassName("box"+bigBoxId);
+
+        for(var i=0;i<activeSmallBoxes.length;i++){
+
+            activeSmallBoxes[i].className += " activeBox";
+            activeSmallBoxes[i].addEventListener('click',fillsBox,false);
+
+        }
+
+        document.getElementById("b"+bigBoxId+bigBoxId).removeEventListener('click',fillsBox,false);
+
+
+    }
+
+    function showAdvance(){
+        document.getElementById("sideWelcomeInfoPanel").style.width = "100%";
+    }
+
+    for (var i=0;i<cell.length;i++){
+        cell[i].addEventListener('click',fillBox,false);
+    }
+
+    function playAdvance(){
+        isPlayingAdvance = true;
+
+        document.getElementById("advBtn").innerHTML = "&#9654; Advance";
+
+        document.getElementsByClassName("hiddenOnNormal")[0].classList.remove("bbox-hide");
+
+        document.getElementById("sideWelcomeInfoPanel").style.width = "0px";
+
+        for (var i=0;i<bigBox.length;i++){
+            bigBox[i].addEventListener('click',zoomLevel,false);
+        }
+    }
+    
+</script>
+</body>
+</html>
